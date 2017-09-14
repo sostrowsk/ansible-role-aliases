@@ -1,0 +1,9 @@
+---
+- name: Add / remove alias
+  lineinfile:
+    line: "{{ item.user }}: {{ item.alias }}"
+    state: "{{ item.state|default('present') }}"
+    dest: "{{ aliases_file|default('/etc/aliases') }}"
+  with_items:
+    "{{ aliases_list|default([]) }}"
+  notify: newaliases
